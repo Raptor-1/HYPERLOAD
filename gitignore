@@ -1,0 +1,40 @@
+# Runtime files — personal to each user, never commit these
+hyperload_config.json
+hyperload_log.txt
+crash_log.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Astronomy data files — too large for GitHub (100MB limit)
+*.fits
+*.fit
+*.fts
+*.xisf
+*.ser
+*.avi
+*.mp4
+*.tiff
+*.tif
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE / OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary output files
+*.log
+temp/
+tmp/
