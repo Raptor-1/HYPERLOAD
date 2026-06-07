@@ -1,6 +1,6 @@
-r"""
-# blind_deconv.py - Blind PSF Deconvolution for Siril
-# Place in: C:/Users/Marcell/Desktop/Siril New Scripts/
+"""
+blind_deconv.py - Blind PSF Deconvolution for Siril
+"""
 
 import sirilpy as s
 s.ensure_installed("PyQt6")
@@ -282,9 +282,30 @@ def estimate_psf_from_image(image: np.ndarray,
     sat_limit = 0.9 * float(np.percentile(image, 99.99))
     psf_stack = []
 
+    # Detect x/y column names - these changed across photutils versions:
+    # < 0.7: 'x', 'y'
+    # 0.7+:  'xcentroid', 'ycentroid'
+    # some builds: 'x_mean', 'y_mean'  or  'x_0', 'y_0'
+    col_names = sources.colnames
+    xcol = ycol = None
+    for xc in ('x_centroid', 'xcentroid', 'x_mean', 'x_0', 'x'):
+        if xc in col_names:
+            xcol = xc
+            break
+    for yc in ('y_centroid', 'ycentroid', 'y_mean', 'y_0', 'y'):
+        if yc in col_names:
+            ycol = yc
+            break
+    if xcol is None or ycol is None:
+        if log_callback:
+            log_callback(f"  Cannot find x/y columns. Available: {col_names}")
+        return None
+    if log_callback:
+        log_callback(f"  Star columns: x={xcol}, y={ycol}")
+
     for src in sources:
-        x0 = int(round(float(src["x"])))
-        y0 = int(round(float(src["y"])))
+        x0 = int(round(float(src[xcol])))
+        y0 = int(round(float(src[ycol])))
 
         if (x0 < border or x0 >= w - border or
                 y0 < border or y0 >= h - border):
@@ -314,7 +335,7 @@ def estimate_psf_from_image(image: np.ndarray,
 
     if not psf_stack:
         if log_callback:
-            log_callback("  PSF estimation failed — no suitable stars found")
+            log_callback("  PSF estimation failed - no suitable stars found")
         return None
 
     if log_callback:
@@ -619,7 +640,7 @@ class DeconvWorker(QThread):
             is_linear, frac = check_linearity(lum)
             if not is_linear:
                 self.log_line.emit(
-                    f"⚠ WARNING: image median at {frac*100:.0f}% of range — "
+                    f"⚠ WARNING: image median at {frac*100:.0f}% of range - "
                     "may already be stretched. Deconvolution works best on linear data.")
 
             if self._cancel.is_set():
@@ -640,7 +661,7 @@ class DeconvWorker(QThread):
                 if psf_small is None:
                     self.finished.emit({
                         "success": False,
-                        "error":   "PSF estimation failed — no suitable stars found. "
+                        "error":   "PSF estimation failed - no suitable stars found. "
                                    "Try lowering detection threshold."
                     })
                     return
@@ -655,7 +676,7 @@ class DeconvWorker(QThread):
                 psf_full = make_gaussian_psf(fwhm_px, (h, w), ell, ang)
                 self.log_line.emit(
                     f"PSF: Gaussian FWHM={fwhm_px:.1f}px  "
-                    f"ellipticity={ell:.3f}  angle={ang:.1f}°")
+                    f"ellipticity={ell:.3f}  angle={ang:.1f}deg")
 
             else:  # load from FITS
                 psf_data = fits.getdata(cfg["psf_fits_path"]).astype(np.float32)
@@ -735,7 +756,7 @@ class DeconvWorker(QThread):
 
             hdu = fits.PrimaryHDU(data=result.astype(np.float32), header=header)
             hdu.header["HISTORY"] = (
-                f"Blind deconvolution ({algorithm}) — blind_deconv.py")
+                f"Blind deconvolution ({algorithm}) - blind_deconv.py")
             hdu.writeto(out_path, overwrite=True)
             self.log_line.emit(f"Saved: {out_path}")
 
@@ -949,7 +970,7 @@ class PSFCanvas(FigureCanvasQTAgg):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Blind PSF Deconvolution — Siril")
+        self.setWindowTitle("Blind PSF Deconvolution - Siril")
         self.resize(1200, 760)
 
         self._worker        = None
@@ -1017,7 +1038,7 @@ class MainWindow(QMainWindow):
         lay = QHBoxLayout(bar)
         lay.setContentsMargins(12, 0, 12, 0)
 
-        lbl_left = QLabel("🔭  Blind PSF Deconvolution  —  Siril")
+        lbl_left = QLabel("🔭  Blind PSF Deconvolution  -  Siril")
         lbl_left.setStyleSheet(
             f"color: {SIRIL_ACCENT}; font-weight: bold; font-size: 11pt;")
         lay.addWidget(lbl_left)
@@ -1084,7 +1105,7 @@ class MainWindow(QMainWindow):
 
         self._psf_mode_combo = QComboBox()
         self._psf_mode_combo.addItems([
-            "Blind (estimate from stars)  — recommended",
+            "Blind (estimate from stars)  - recommended",
             "Gaussian (specify FWHM manually)",
             "Load PSF from FITS file",
         ])
@@ -1148,7 +1169,7 @@ class MainWindow(QMainWindow):
         self._angle_spin.setRange(0.0, 180.0)
         self._angle_spin.setValue(0.0)
         self._angle_spin.setSingleStep(5.0)
-        self._angle_spin.setSuffix(" °")
+        self._angle_spin.setSuffix(" deg")
         gform.addRow("Angle:", self._angle_spin)
 
         gauss_lay.addLayout(gform)
@@ -1468,7 +1489,7 @@ class MainWindow(QMainWindow):
              "control matters most. Parameter: epsilon (0.001=sharp, 0.1=smooth)"),
             ("Iterative, photon-preserving. Best for point sources and galaxies. "
              "More iterations = sharper but risk ringing artefacts. "
-             "Stop at 10–30 for nebulae, up to 100 for star fields."),
+             "Stop at 10-30 for nebulae, up to 100 for star fields."),
             ("Gradient-regularised Wiener. Suppresses ringing at object edges. "
              "Best for images with hard transitions. "
              "Parameter: lambda (0.001=sharp, 0.1=smooth)"),
@@ -1581,7 +1602,7 @@ class MainWindow(QMainWindow):
             return
 
         self._btn_preview_psf.setEnabled(False)
-        self._btn_preview_psf.setText("Estimating…")
+        self._btn_preview_psf.setText("Estimating...")
         self._log("─── PSF Preview ───")
 
         psf_size_map = {"32 px": 32, "64 px": 64, "128 px": 128}
@@ -1681,7 +1702,7 @@ class MainWindow(QMainWindow):
         self._btn_cancel.setEnabled(True)
         self._progress.setValue(0)
         self._progress.setVisible(True)
-        self._set_status("Running…", SIRIL_ACCENT)
+        self._set_status("Running...", SIRIL_ACCENT)
         self._worker.start()
 
     def _cancel(self):
@@ -1690,7 +1711,7 @@ class MainWindow(QMainWindow):
         if self._psf_worker and self._psf_worker.isRunning():
             self._psf_worker.terminate()
         self._btn_cancel.setEnabled(False)
-        self._log("Cancellation requested…")
+        self._log("Cancellation requested...")
 
     # ── WORKER CALLBACKS ───────────────────────────────────────────────────────
 

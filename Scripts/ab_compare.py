@@ -29,7 +29,7 @@ from PyQt6.QtWidgets import (
     QSlider, QSplitter, QButtonGroup, QFrame, QSizePolicy, QScrollArea
 )
 from PyQt6.QtCore import Qt, QTimer, pyqtSignal, QObject
-from PyQt6.QtGui import QFont, QColor, QKeySequence
+from PyQt6.QtGui import QFont, QColor, QKeySequence, QShortcut
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
@@ -1272,7 +1272,7 @@ class MainWindow(QMainWindow):
         btn_reset = QPushButton("⊞ Reset zoom")
         btn_reset.setObjectName("primary")
         btn_reset.setFixedHeight(28)
-        btn_reset.clicked.connect(self._canvas.reset_zoom)
+        btn_reset.clicked.connect(lambda: self._canvas.reset_zoom())
         bar.addWidget(btn_reset)
 
         bar.addStretch()

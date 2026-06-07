@@ -344,9 +344,9 @@ class PatternWorker(QObject):
 #  STYLESHEET
 # ═══════════════════════════════════════════════════════════════════════════════
 
-BG="#0e1210"; BG2="#121a14"; BG3="#192018"; BOR="#1e3020"
-ACC="#50d060"; AC2="#2a7030"; TXT="#c8e0c0"; DIM="#2a4028"
-OK="#40d080"; WRN="#d0a030"; ERR="#c04040"; SEC="#60c070"
+BG="#1e2128";  BG2="#252930"; BG3="#2d3240"; BOR="#3a4055"
+ACC="#4a9eff"; AC2="#2d6abf"; TXT="#dde3ee"; DIM="#7a8499"
+OK="#4caf7d";  WRN="#e8a23a"; ERR="#cc4444"; SEC="#5ba3ff"
 
 DARK = f"""
 QMainWindow,QWidget{{background:{BG};color:{TXT};
@@ -368,7 +368,7 @@ QCheckBox::indicator{{width:14px;height:14px;border:1px solid {BOR};
 QCheckBox::indicator:checked{{background:{ACC};}}
 QSpinBox,QDoubleSpinBox,QComboBox{{background:{BG3};
     border:1px solid {BOR};border-radius:3px;padding:3px 6px;color:{TXT};}}
-QTextEdit{{background:#080c08;border:1px solid {BOR};color:{OK};
+QTextEdit{{background:#12141a;border:1px solid {BOR};color:{OK};
     font-family:Consolas,monospace;font-size:10px;}}
 QProgressBar{{background:{BG3};border:1px solid {BOR};
     border-radius:3px;height:8px;}}

@@ -142,7 +142,7 @@ QWidget {
     background-color: #232323;
     color: #c8c8c8;
     font-family: -apple-system, 'Segoe UI', Ubuntu, sans-serif;
-    font-size: 11px;
+    font-size: 15px;
 }
 QScrollBar:vertical {
     background: #1e1e1e; width: 5px; border: none;
@@ -165,7 +165,7 @@ QLineEdit {
     padding: 3px 6px;
     color: #6888b0;
     font-family: 'Consolas', 'Fira Code', monospace;
-    font-size: 9px;
+    font-size: 13px;
 }
 QLineEdit:focus { border-color: #2e4060; }
 QPushButton {
@@ -174,7 +174,7 @@ QPushButton {
     border-radius: 3px;
     padding: 3px 8px;
     color: #888888;
-    font-size: 9px;
+    font-size: 13px;
 }
 QPushButton:hover { background: #333333; color: #aaaaaa; }
 QPushButton:pressed { background: #242424; }
@@ -189,7 +189,7 @@ QToolTip {
     border: 1px solid #1a1a1a;
     color: #c8c8c8;
     padding: 4px 6px;
-    font-size: 9px;
+    font-size: 13px;
 }
 """
 
@@ -207,7 +207,7 @@ def _sep(parent=None):
 
 def _sec_label(text, parent=None):
     lbl = QLabel(text.upper(), parent)
-    lbl.setStyleSheet(f'color:{TEXT_FAINT};font-size:8px;letter-spacing:0.08em;')
+    lbl.setStyleSheet(f'color:{TEXT_FAINT};font-size: 12px;letter-spacing:0.08em;')
     return lbl
 
 
@@ -215,7 +215,7 @@ def _path_edit(value='', parent=None):
     e = QLineEdit(value, parent)
     e.setStyleSheet(f'background:{INPUT_BG};border:1px solid {BORDER2};'
                     f'border-radius:3px;padding:3px 6px;'
-                    f'color:{INPUT_TEXT};font-size:8px;')
+                    f'color:{INPUT_TEXT};font-size: 12px;')
     return e
 
 
@@ -320,12 +320,12 @@ class FileChip(QWidget):
         lay.setContentsMargins(6, 0, 6, 0)
         lay.setSpacing(5)
         ico = QLabel('🗂')
-        ico.setStyleSheet('font-size:12px;background:transparent;border:none;')
+        ico.setStyleSheet('font-size: 16px;background:transparent;border:none;')
         name_lbl = QLabel(file_info['name'])
-        name_lbl.setStyleSheet(f'color:#686868;font-size:8px;font-weight:500;'
+        name_lbl.setStyleSheet(f'color:#686868;font-size: 12px;font-weight:500;'
                                 f'background:transparent;border:none;')
         size_lbl = QLabel(file_info['size'])
-        size_lbl.setStyleSheet(f'color:{TEXT_GHOST};font-size:7px;'
+        size_lbl.setStyleSheet(f'color:{TEXT_GHOST};font-size: 11px;'
                                 f'background:transparent;border:none;')
         lay.addWidget(ico)
         lay.addWidget(name_lbl)
@@ -369,13 +369,13 @@ class FileItemRow(QWidget):
         lay.setContentsMargins(6, 0, 6, 0)
         lay.setSpacing(5)
         name = QLabel(file_info['name'])
-        name.setStyleSheet(f'color:#6080a0;font-size:8px;background:transparent;border:none;')
+        name.setStyleSheet(f'color:#6080a0;font-size: 12px;background:transparent;border:none;')
         size = QLabel(file_info['size'])
-        size.setStyleSheet(f'color:{TEXT_GHOST};font-size:7px;background:transparent;border:none;')
+        size.setStyleSheet(f'color:{TEXT_GHOST};font-size: 11px;background:transparent;border:none;')
         rm = QPushButton('✕')
         rm.setFixedSize(16, 16)
         rm.setStyleSheet(
-            f'background:transparent;border:none;color:{TEXT_GHOST};font-size:9px;'
+            f'background:transparent;border:none;color:{TEXT_GHOST};font-size: 13px;'
             f'padding:0;')
         rm.clicked.connect(self._remove)
         lay.addWidget(name, 1)
@@ -467,24 +467,24 @@ class ScriptPanel(QFrame):
 
         title = QLabel(self.script_id.replace('_', ' '))
         title.setStyleSheet(
-            f'color:#909090;font-size:10px;font-weight:600;background:transparent;border:none;')
+            f'color:#909090;font-size: 14px;font-weight:600;background:transparent;border:none;')
 
         suite_name = QLabel(self.suite_id.replace('_', ' '))
         suite_name.setStyleSheet(
-            f'color:{TEXT_GHOST};font-size:8px;background:transparent;border:none;')
+            f'color:{TEXT_GHOST};font-size: 12px;background:transparent;border:none;')
 
         self._collapse_btn = QToolButton()
         self._collapse_btn.setText('⌃')
         self._collapse_btn.setFixedSize(20, 20)
         self._collapse_btn.setStyleSheet(
-            f'background:transparent;border:none;color:{TEXT_GHOST};font-size:11px;')
+            f'background:transparent;border:none;color:{TEXT_GHOST};font-size: 15px;')
         self._collapse_btn.clicked.connect(self._toggle_collapse)
 
         close_btn = QToolButton()
         close_btn.setText('✕')
         close_btn.setFixedSize(20, 20)
         close_btn.setStyleSheet(
-            f'background:transparent;border:none;color:{TEXT_GHOST};font-size:10px;')
+            f'background:transparent;border:none;color:{TEXT_GHOST};font-size: 14px;')
         close_btn.clicked.connect(self._close)
 
         lay.addWidget(dot)
@@ -537,7 +537,7 @@ class ScriptPanel(QFrame):
         desc_lbl = QLabel(SCRIPT_DESCS.get(
             self.script_id, 'Standalone script.'))
         desc_lbl.setWordWrap(True)
-        desc_lbl.setStyleSheet(f'color:{TEXT_DIM};font-size:9px;'
+        desc_lbl.setStyleSheet(f'color:{TEXT_DIM};font-size: 13px;'
                                 f'background:transparent;')
         lay.addWidget(desc_lbl)
 
@@ -566,8 +566,8 @@ class ScriptPanel(QFrame):
             ('Working', self._wd_edit),
         ]):
             l = QLabel(lbl)
-            l.setFixedWidth(52)
-            l.setStyleSheet(f'color:{TEXT_FAINT};font-size:8px;'
+            l.setFixedWidth(68)
+            l.setStyleSheet(f'color:{TEXT_FAINT};font-size: 12px;'
                             f'text-transform:uppercase;background:transparent;')
             gl.addWidget(l, i, 0)
             gl.addWidget(widget, i, 1)
@@ -594,7 +594,7 @@ class ScriptPanel(QFrame):
         run_btn.setStyleSheet(
             f'background:{ACC_DIM};border:1px solid #2a4070;'
             f'color:#6898d0;font-weight:600;border-radius:3px;'
-            f'padding:4px 12px;font-size:9px;')
+            f'padding:4px 12px;font-size: 13px;')
         run_btn.clicked.connect(self._run)
 
         open_btn = QPushButton('Open full window')
@@ -618,7 +618,7 @@ class ScriptPanel(QFrame):
         self._drop_zone.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._drop_zone.setFixedHeight(48)
         self._drop_zone.setStyleSheet(
-            f'color:{TEXT_GHOST};font-size:9px;'
+            f'color:{TEXT_GHOST};font-size: 13px;'
             f'border:1px dashed #2e2e2e;border-radius:3px;background:transparent;')
         self._drop_zone.setAcceptDrops(True)
         self._drop_zone.dragEnterEvent = self._dz_enter
@@ -653,13 +653,13 @@ class ScriptPanel(QFrame):
         if e.mimeData().hasFormat(MIME_TYPE):
             e.acceptProposedAction()
             self._drop_zone.setStyleSheet(
-                f'color:{ACCENT};font-size:9px;'
+                f'color:{ACCENT};font-size: 13px;'
                 f'border:1px dashed {ACCENT};border-radius:3px;'
                 f'background:{ACC_DIM};')
 
     def _dz_leave(self, e):
         self._drop_zone.setStyleSheet(
-            f'color:{TEXT_GHOST};font-size:9px;'
+            f'color:{TEXT_GHOST};font-size: 13px;'
             f'border:1px dashed #2e2e2e;border-radius:3px;background:transparent;')
 
     def _dz_drop(self, e):
@@ -839,7 +839,7 @@ class DesktopWidget(QWidget):
             'Panels are movable  ·  resizable  ·  collapsible')
         self.hint.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.hint.setStyleSheet(
-            f'color:#404040;font-size:10px;background:transparent;')
+            f'color:#404040;font-size: 14px;background:transparent;')
 
     def resizeEvent(self, e):
         super().resizeEvent(e)
@@ -874,7 +874,7 @@ class SuiteRow(QWidget):
         self.suite_id = suite['id']
         self.color    = color
         self.main_win = main_win
-        self.setFixedHeight(30)
+        self.setFixedHeight(38)
         self._bg_default = 'transparent'
         self._bg_open    = '#2a2a2a'
 
@@ -882,16 +882,14 @@ class SuiteRow(QWidget):
         lay.setContentsMargins(8, 0, 8, 0)
         lay.setSpacing(0)
 
-        self._chev = QLabel('▶')
-        self._chev.setFixedWidth(14)
+        self._chev = QLabel('▶' if not expanded else '▼')
+        self._chev.setFixedWidth(18)
         self._chev.setStyleSheet(
-            f'color:{"#686868" if loaded else "#383838"};'
-            f'font-size:7px;background:transparent;')
-        if expanded:
-            self._chev.setText('▼')
+            f'color:{"#999999" if loaded else "#555555"};'
+            f'font-size: 15px;background:transparent;')
 
         dot = QLabel()
-        dot.setFixedSize(8, 8)
+        dot.setFixedSize(10, 10)
         dot.setStyleSheet(
             f'background:{color if loaded else "#2e2e2e"};'
             f'border-radius:4px;border:none;margin:0 6px;')
@@ -899,17 +897,17 @@ class SuiteRow(QWidget):
         name_lbl = QLabel(suite['name'])
         name_lbl.setStyleSheet(
             f'color:{"#909090" if loaded else "#484848"};'
-            f'font-size:10px;font-weight:600;background:transparent;')
+            f'font-size: 14px;font-weight:600;background:transparent;')
 
         cnt_lbl = QLabel(str(script_count))
         cnt_lbl.setStyleSheet(
-            f'color:{TEXT_GHOST};font-size:8px;margin-right:6px;background:transparent;')
+            f'color:{TEXT_GHOST};font-size: 12px;margin-right:6px;background:transparent;')
 
         tog = QPushButton('unload' if loaded else 'load')
         tog.setFixedHeight(18)
         tog.setStyleSheet(
             f'background:#1e1e1e;border:1px solid #1a1a1a;border-radius:2px;'
-            f'color:#444444;font-size:7px;padding:0 5px;')
+            f'color:#444444;font-size: 11px;padding:0 5px;')
         tog.clicked.connect(lambda: main_win.toggle_suite(self.suite_id))
 
         lay.addWidget(self._chev)
@@ -933,14 +931,14 @@ class ScriptRow(QWidget):
         self.script_id = script_id
         self.suite_id  = suite_id
         self.main_win  = main_win
-        self.setFixedHeight(24)
+        self.setFixedHeight(30)
         self.setAcceptDrops(True)
         self.setCursor(
             Qt.CursorShape.PointingHandCursor if loaded
             else Qt.CursorShape.ForbiddenCursor)
 
         lay = QHBoxLayout(self)
-        lay.setContentsMargins(30, 0, 8, 0)
+        lay.setContentsMargins(38, 0, 8, 0)
         lay.setSpacing(6)
 
         dash = QFrame()
@@ -951,7 +949,7 @@ class ScriptRow(QWidget):
         name_color = color if is_open else (TEXT_GHOST if loaded else '#2e2e2e')
         name = QLabel(script_id.replace('_', ' '))
         name.setStyleSheet(
-            f'color:{name_color};font-size:9px;background:transparent;'
+            f'color:{name_color};font-size: 13px;background:transparent;'
             f'{"font-weight:600;" if is_open else ""}')
 
         badge_text = f'{file_count} file{"s" if file_count!=1 else ""}' \
@@ -963,7 +961,7 @@ class ScriptRow(QWidget):
         badge.setStyleSheet(
             f'background:{badge_color};border:1px solid {badge_border};'
             f'border-radius:8px;color:{badge_text_color};'
-            f'font-size:7px;padding:0 5px;')
+            f'font-size: 11px;padding:0 5px;')
 
         if not loaded:
             self.setStyleSheet('background:transparent;opacity:0.4;')
@@ -1089,14 +1087,14 @@ class HyperloadWindow(QMainWindow):
         lay.setSpacing(12)
 
         logo_lbl = QLabel('✦')
-        logo_lbl.setStyleSheet(f'color:{ACCENT};font-size:13px;background:transparent;')
+        logo_lbl.setStyleSheet(f'color:{ACCENT};font-size: 17px;background:transparent;')
         name_lbl = QLabel('HYPERLOAD')
         name_lbl.setStyleSheet(
-            f'color:#a0a0a0;font-size:11px;font-weight:700;'
+            f'color:#a0a0a0;font-size: 15px;font-weight:700;'
             f'letter-spacing:0.15em;background:transparent;')
         ver_lbl = QLabel('v2.0')
         ver_lbl.setStyleSheet(
-            f'color:#2e2e2e;font-size:8px;border:1px solid #2e2e2e;'
+            f'color:#2e2e2e;font-size: 12px;border:1px solid #2e2e2e;'
             f'border-radius:2px;padding:1px 4px;background:transparent;')
 
         lay.addWidget(logo_lbl)
@@ -1149,7 +1147,7 @@ class HyperloadWindow(QMainWindow):
 
     def _build_sidebar(self):
         sb = QWidget()
-        sb.setFixedWidth(228)
+        sb.setFixedWidth(310)
         sb.setStyleSheet(
             f'background:{PANEL};border-right:1px solid {BORDER};')
         lay = QVBoxLayout(sb)
@@ -1200,9 +1198,9 @@ class HyperloadWindow(QMainWindow):
             bl.setContentsMargins(6, 4, 6, 4)
             bl.setSpacing(1)
             ll = QLabel(label)
-            ll.setStyleSheet(f'color:{TEXT_GHOST};font-size:7px;background:transparent;')
+            ll.setStyleSheet(f'color:{TEXT_GHOST};font-size: 11px;background:transparent;')
             vl = QLabel(value)
-            vl.setStyleSheet(f'color:{color};font-size:12px;font-weight:600;background:transparent;')
+            vl.setStyleSheet(f'color:{color};font-size: 16px;font-weight:600;background:transparent;')
             bl.addWidget(ll)
             bl.addWidget(vl)
             gl.addWidget(box, 0, col)
@@ -1234,7 +1232,7 @@ class HyperloadWindow(QMainWindow):
         hint_lay.setContentsMargins(10, 6, 10, 6)
         self._side_info = QLabel('Click a script to open its panel.')
         self._side_info.setWordWrap(True)
-        self._side_info.setStyleSheet(f'color:{TEXT_GHOST};font-size:8px;background:transparent;')
+        self._side_info.setStyleSheet(f'color:{TEXT_GHOST};font-size: 12px;background:transparent;')
         hint_lay.addWidget(self._side_info)
         lay.addWidget(hint_w)
 
@@ -1353,7 +1351,7 @@ class HyperloadWindow(QMainWindow):
         add_btn.setFixedHeight(36)
         add_btn.setStyleSheet(
             f'background:#2a2a2a;border:1px solid {BORDER2};border-radius:3px;'
-            f'color:{TEXT_DIM};font-size:8px;padding:0 10px;')
+            f'color:{TEXT_DIM};font-size: 12px;padding:0 10px;')
         add_btn.clicked.connect(self._add_dock_files)
         chips_lay.addWidget(add_btn)
 
@@ -1361,7 +1359,7 @@ class HyperloadWindow(QMainWindow):
         clear_btn.setFixedHeight(36)
         clear_btn.setStyleSheet(
             f'background:#2a2a2a;border:1px solid {BORDER2};border-radius:3px;'
-            f'color:{TEXT_GHOST};font-size:8px;padding:0 10px;')
+            f'color:{TEXT_GHOST};font-size: 12px;padding:0 10px;')
         clear_btn.clicked.connect(self._clear_dock)
         chips_lay.addWidget(clear_btn)
 
@@ -1410,7 +1408,7 @@ class HyperloadWindow(QMainWindow):
         lay.setSpacing(8)
         self._status_lbl = QLabel('Ready.')
         self._status_lbl.setStyleSheet(
-            f'color:#444444;font-size:8px;background:transparent;')
+            f'color:#444444;font-size: 12px;background:transparent;')
         self._sb_prog = QProgressBar()
         self._sb_prog.setFixedSize(120, 3)
         self._sb_prog.setRange(0, 100)
@@ -1420,7 +1418,7 @@ class HyperloadWindow(QMainWindow):
             'QProgressBar{background:#222;border:none;border-radius:1px;}'
             'QProgressBar::chunk{background:#3d6ea0;border-radius:1px;}')
         arch_lbl = QLabel('Lazy load  ·  memmap FITS  ·  result cache')
-        arch_lbl.setStyleSheet(f'color:#2a2a2a;font-size:8px;background:transparent;')
+        arch_lbl.setStyleSheet(f'color:#2a2a2a;font-size: 12px;background:transparent;')
         lay.addWidget(self._status_lbl, 1)
         lay.addWidget(self._sb_prog)
         lay.addWidget(arch_lbl)
@@ -1475,13 +1473,13 @@ def _vsep():
 
 def _stat_label(text):
     l = QLabel(text)
-    l.setStyleSheet(f'color:{TEXT_GHOST};font-size:8px;background:transparent;')
+    l.setStyleSheet(f'color:{TEXT_GHOST};font-size: 12px;background:transparent;')
     return l
 
 
 def _path_label(text):
     l = QLabel(text)
-    l.setStyleSheet(f'color:{TEXT_FAINT};font-size:8px;background:transparent;')
+    l.setStyleSheet(f'color:{TEXT_FAINT};font-size: 12px;background:transparent;')
     return l
 
 

@@ -717,7 +717,7 @@ class MainWindow(QMainWindow):
         # ── left panel ───────────────────────────────────────────────────
         left_scroll = QScrollArea()
         left_scroll.setWidgetResizable(True)
-        left_scroll.setFixedWidth(380)
+        left_scroll.setFixedWidth(520)
         left_inner  = QWidget()
         left_vbox   = QVBoxLayout(left_inner)
         left_vbox.setSpacing(8)
